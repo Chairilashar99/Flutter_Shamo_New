@@ -19,13 +19,27 @@ class AuthProvider with ChangeNotifier {
     required String password,
   }) async {
     try {
-      print(name);
-      print(username);
-      print(email);
-      print(password);
       UserModel user = await AuthService().register(
         name: name,
         username: username,
+        email: email,
+        password: password,
+      );
+
+      _user = user;
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  Future<bool> login({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      UserModel user = await AuthService().login(
         email: email,
         password: password,
       );
